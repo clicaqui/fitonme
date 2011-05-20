@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
             xmlns:view="br.com.fitness.view.*"
-	xmlns:popup="com.adobe.cairngorm.popup.*" xmlns:screens="br.com.fitness.screens.*"  layout="absolute" applicationComplete="init()">
+	xmlns:popup="com.adobe.cairngorm.popup.*" xmlns:screens="br.com.fitness.screens.*"  layout="absolute" applicationComplete="loginForm.open = true;">
 	
    <mx:HTTPService
             id="loginService"
@@ -16,7 +16,17 @@
         </mx:request>
     </mx:HTTPService>
  
-<popup:PopUpWrapper id="loginForm" center="true" modal="true">    	
+ <mx:Script>
+ 	<![CDATA[
+       // ******************************************************
+       // Private Constants and Attributes 
+       // ******************************************************
+        
+		[Bindable]  private var _model : ModelLocator = ModelLocator.getInstance(); 	
+ 	]]>
+ </mx:Script>
+ 
+<popup:PopUpWrapper id="loginForm" open="{!_model.autenticado}" center="true" modal="true">    	
 <mx:Panel title="Login" layout="vertical" horizontalAlign="center" verticalCenter="-112" verticalGap="5"
           paddingLeft="15" paddingRight="15" paddingTop="5" paddingBottom="5" height="229" horizontalCenter="0">
 
@@ -27,6 +37,7 @@
       import mx.controls.Alert;
       import mx.events.CloseEvent;
       import mx.rpc.events.*;
+      import br.clicaqui.model.ModelLocator;
       
 //      import br.com.fitness.control.events.LoginUsuarioEvent;
       
@@ -38,17 +49,17 @@
         }
         private function loginServiceResultHandler(event:ResultEvent):void {
            
-            Alert.show("Logado com Sucesso");
-            loginForm.open = false;
+            Alert.show("Logado com Sucesso:");
+           
+            _model.autenticado = true;
+
         }
         private function loginServiceFaultHandler(event:FaultEvent):void {
             authenticationMessage.text = "Problem while authentication ...";
             authenticationMessage.visible = true;
         }
         
- 		private function init():void {
-            loginForm.open = true;
-        }
+
       
     ]]>
   </mx:Script>
