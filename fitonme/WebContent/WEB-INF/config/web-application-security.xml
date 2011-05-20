@@ -5,15 +5,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
 
-	<http auto-config="true" session-fixation-protection="none" />
+	<http auto-config="true">
+	    <intercept-url pattern="index.html" filters="none"/>
+        <intercept-url pattern="*.swf" filters="none"/>
+        <intercept-url pattern="*.html" access="ROLE_USER"/>
+       </http> 
 
 	<authentication-provider>
 		<user-service>
-			<user name="john" password="guest" authorities="ROLE_GUEST" />
-			<user name="cdaniel" password="john"
-				authorities="ROLE_USER" />
+			<user name="guest" password="guest" authorities="ROLE_GUEST" />
+			<user name="john" password="john"
+				authorities="ROLE_GUEST, ROLE_USER" />
 			<user name="admin" password="admin"
-				authorities="ROLE_ADMIN" />
+				authorities="ROLE_GUEST, ROLE_USER, ROLE_ADMIN" />
 		</user-service>
 	</authentication-provider>
 
