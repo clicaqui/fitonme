@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mvc:ServiceLocator xmlns:mvc="com.adobe.cairngorm.business.*" 
+					 xmlns:mx="http://www.adobe.com/2006/mxml">
+
+
+	<mx:ChannelSet id="channel">
+		<mx:AMFChannel url="http://localhost:8080/Fitonme/messagebroker/amf"/>
+	</mx:ChannelSet>
+
+	<mx:RemoteObject id="secureService"  destination="secureService" showBusyCursor="true" channelSet="{channel}"/>
+	
+	
+</mvc:ServiceLocator>
+	
+
+	
