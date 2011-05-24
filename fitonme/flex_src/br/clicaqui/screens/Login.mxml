@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 title="Login" layout="vertical" horizontalAlign="center" verticalCenter="-112" verticalGap="5"
+          paddingLeft="15" paddingRight="15" paddingTop="5" paddingBottom="5" height="229" horizontalCenter="0">
+
+   <mx:HTTPService
+            id="loginService"
+            url="j_spring_security_check"
+            showBusyCursor="true"
+            method="POST"
+            result="loginServiceResultHandler(event)"
+            fault="loginServiceFaultHandler(event)">
+        <mx:request>
+            <j_username>{emailTextInput.text}</j_username>
+            <j_password>{passwordTextInput.text}</j_password>
+        </mx:request>
+    </mx:HTTPService>
+
+  
+  <mx:Script>
+    <![CDATA[
+    	import mx.containers.Panel;
+      import mx.controls.Alert;
+      import mx.events.CloseEvent;
+      import mx.rpc.events.*;
+      import br.clicaqui.model.ModelLocator;
+      
+//      import br.com.fitness.control.events.LoginUsuarioEvent;
+      
+      
+            private function submitLogin():void {
+            submitButton.enabled = false;
+            loginService.send();
+            submitButton.enabled = true;
+        }
+        private function loginServiceResultHandler(event:ResultEvent):void {
+           
+            Alert.show("Logado com Sucesso:");
+           
+            _model.autenticado = true;
+
+        }
+        private function loginServiceFaultHandler(event:FaultEvent):void {
+            authenticationMessage.text = "Problem while authentication ...";
+            authenticationMessage.visible = true;
+        }
+       // ******************************************************
+       // Private Constants and Attributes 
+       // ******************************************************
+        
+		[Bindable]  private var _model : ModelLocator = ModelLocator.getInstance(); 	
+      
+
+      
+    ]]>
+  </mx:Script>
+  
+   
+    
+  <mx:Text id="authenticationMessage" visible="false" styleName="warning"/>
+  <mx:Image source="assets/logo.png"/>
+  
+  <mx:Form defaultButton="{submitButton}">
+    <mx:FormItem label="Login or Email">      
+      <mx:TextInput id="emailTextInput" text="" />                        
+    </mx:FormItem>
+    <mx:FormItem label="Password">
+      <mx:TextInput id="passwordTextInput" displayAsPassword="true"  text="" />
+    </mx:FormItem>
+  </mx:Form>
+    
+  <mx:Button id="submitButton" label="OK" click="submitLogin()"/>    
+  
+</mx:Panel>
+
