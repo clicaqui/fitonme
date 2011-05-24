@@ -7,21 +7,32 @@
  <mx:Script>
  	<![CDATA[
  		import br.clicaqui.model.ModelLocator;
+ 		import br.clicaqui.control.events.LoadGrantsEvent;
        // ******************************************************
        // Private Constants and Attributes 
        // ******************************************************
-        
+        public function getGrants():void {
+            var event : LoadGrantsEvent = new LoadGrantsEvent();
+	        event.dispatch();
+        }
 		[Bindable]  private var _model : ModelLocator = ModelLocator.getInstance(); 	
  	]]>
  </mx:Script>
 
 	<mx:ApplicationControlBar width="100%" height="8%">
-		<mx:Button label="Button"/>
+		<mx:Button label="Button" click="getGrants()"/>
 	</mx:ApplicationControlBar>
 	 
+
+
+  
+ <control:FitonmeController						xmlns:control="br.clicaqui.control.*" />
+ <rds:Services	id="fitonmeServices"		xmlns:rds="br.clicaqui.control.delegates.*" />  
+    
 
 	
 <popup:PopUpWrapper id="loginForm" open="{!_model.autenticado}" center="true" modal="true">    	
 	<screens:Login />
 </popup:PopUpWrapper>
+
 </mx:Application>
