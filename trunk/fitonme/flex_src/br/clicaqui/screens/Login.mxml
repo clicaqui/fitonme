@@ -5,7 +5,7 @@
 
    <mx:HTTPService
             id="loginService"
-            url="j_spring_security_check"
+            url="http://localhost:8080/Fitonme/j_spring_security_check"
             showBusyCursor="true"
             method="POST"
             result="loginServiceResultHandler(event)"
@@ -25,13 +25,15 @@
       import mx.rpc.events.*;
       import br.clicaqui.model.ModelLocator;
       
-//      import br.com.fitness.control.events.LoginUsuarioEvent;
+      import br.clicaqui.control.events.LoadGrantsEvent;
       
       
             private function submitLogin():void {
             submitButton.enabled = false;
             loginService.send();
-            submitButton.enabled = true;
+       
+
+			submitButton.enabled = true;            
         }
         private function loginServiceResultHandler(event:ResultEvent):void {
            
