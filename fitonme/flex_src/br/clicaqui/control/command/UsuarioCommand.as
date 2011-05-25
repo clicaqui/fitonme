@@ -1,7 +1,7 @@
 package br.clicaqui.control.command
 {
 	import br.clicaqui.control.delegates.UsuarioDelegate;
-	import br.clicaqui.control.events.LoadGrantsEvent;
+	import br.clicaqui.control.events.*;
 	import br.clicaqui.model.ModelLocator;
 	import br.clicaqui.model.vo.AuthorizationData;
 	
@@ -17,6 +17,7 @@ package br.clicaqui.control.command
 	  {
 	  		switch(event.type) {
 				case LoadGrantsEvent.EVENT_NAME   	:    	loadGrants(event as LoadGrantsEvent);		break;
+				
 				default 							:		break;
 			}
  	
@@ -25,19 +26,20 @@ package br.clicaqui.control.command
 			var handlers : IResponder = new mx.rpc.Responder(onResults_loadGrants,fault);
 			getDelegate(handlers).loadGrants();
 	  }
+
 	  
 		// *************************************************************
 		// Private Event Handlers
 		// *************************************************************
 		private function onResults_loadGrants(data:Object):void {
-			//__model.autenticado = true;
+
 			//__model.CURRENT_VIEW = "home";
-			__model._userRoles = (data as AuthorizationData).roles
-
-			Alert.show(new String((data as AuthorizationData).roles));
-
+			__model._userRoles = (data as AuthorizationData).roles;
+			__model.usuario = (data as AuthorizationData).username;
+			__model.autenticado = true;
 
 		}	  
+
 		// *************************************************************
 		// IResponder Interface Method stubs
 		// *************************************************************
