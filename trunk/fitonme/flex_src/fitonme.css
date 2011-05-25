@@ -1,0 +1,15 @@
+/* CSS file */
+
+Application
+{
+	backgroundColor: #FEFEFE;
+}
+Panel
+{
+	horizontalAlign: center;
+	paddingBottom: 5;
+	paddingLeft: 15;
+	paddingRight: 15;
+	paddingTop: 5;
+	verticalGap: 5;
+}
