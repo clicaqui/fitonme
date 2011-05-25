@@ -6,9 +6,9 @@ package br.clicaqui.control.delegates
 	
 	import com.adobe.cairngorm.business.ServiceLocator;
 	
-	import mx.collections.ArrayCollection;
 	import mx.rpc.AsyncToken;
 	import mx.rpc.IResponder;
+	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.remoting.RemoteObject;
 	
@@ -20,7 +20,7 @@ package br.clicaqui.control.delegates
 		}
 
 		public function loadGrants():void {
-			var handlers : IResponder = new mx.rpc.Responder(onResults_loadGrants,null);
+			var handlers : IResponder = new mx.rpc.Responder(onResults_loadGrants,onFaults_loadGrants);
 			var token    : AsyncToken = service.getUserDetails();
 			
 			    token.addResponder(handlers);
@@ -35,8 +35,15 @@ package br.clicaqui.control.delegates
 			
 			
 		}
-	
-		
+		private function onFaults_loadGrants(event:FaultEvent):void {
+
+			__responder.fault(event.fault);
+			
+			
+		}	
+
+		/*   REMOTE OBJECT */
+				
 		private function get service():RemoteObject {
 			if (__service == null) {
 				__service = ServiceLocator.getInstance().getRemoteObject("secureService");

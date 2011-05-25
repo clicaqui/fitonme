@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
             xmlns:view="br.clicaqui.view.*"
-	xmlns:popup="com.adobe.cairngorm.popup.*" xmlns:screens="br.clicaqui.screens.*"  layout="absolute" applicationComplete="loginForm.open = true;">
+	xmlns:popup="com.adobe.cairngorm.popup.*" xmlns:screens="br.clicaqui.screens.*"  layout="absolute" applicationComplete="getGrants()">
 	
  
  <mx:Script>
  	<![CDATA[
+ 		import flash.net.sendToURL;
  		import br.clicaqui.model.ModelLocator;
- 		import br.clicaqui.control.events.LoadGrantsEvent;
+ 		import br.clicaqui.control.events.*;
        // ******************************************************
        // Private Constants and Attributes 
        // ******************************************************
@@ -15,16 +16,21 @@
             var event : LoadGrantsEvent = new LoadGrantsEvent();
 	        event.dispatch();
         }
+        public function logoutApp():void{
+
+        	var urlRequest:URLRequest = new URLRequest('http://localhost:8080/Fitonme/j_spring_security_logout');
+			navigateToURL(urlRequest,"_self");
+        	
+        }
 		[Bindable]  private var _model : ModelLocator = ModelLocator.getInstance(); 	
  	]]>
  </mx:Script>
 
 	<mx:ApplicationControlBar width="100%" height="8%">
-		<mx:Button label="Button" click="getGrants()"/>
+		<mx:Spacer width="100%"/>
+		<mx:Button label="Sair" click="logoutApp();"/>
 	</mx:ApplicationControlBar>
 	 
-
-
   
  <control:FitonmeController						xmlns:control="br.clicaqui.control.*" />
  <rds:Services	id="fitonmeServices"		xmlns:rds="br.clicaqui.control.delegates.*" />  
@@ -34,5 +40,7 @@
 <popup:PopUpWrapper id="loginForm" open="{!_model.autenticado}" center="true" modal="true">    	
 	<screens:Login />
 </popup:PopUpWrapper>
+
+	<mx:Style source="fitonme.css"/>
 
 </mx:Application>

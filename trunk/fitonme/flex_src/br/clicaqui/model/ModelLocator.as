@@ -24,6 +24,7 @@ package br.clicaqui.model
   		// Variaveis do Usuario
   		// ************************
 		public var autenticado 	: Boolean = false;
+		public var usuario 	: String = "";
 		public var _userRoles        : Array = new Array;
 		public var usuarios        : ArrayCollection = new ArrayCollection;
   		public var _userMetas        : ArrayCollection = new ArrayCollection;

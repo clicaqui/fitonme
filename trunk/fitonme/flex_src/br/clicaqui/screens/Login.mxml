@@ -37,9 +37,8 @@
         }
         private function loginServiceResultHandler(event:ResultEvent):void {
            
-            Alert.show("Logado com Sucesso:");
-           
-            _model.autenticado = true;
+            var evento : LoadGrantsEvent = new LoadGrantsEvent();
+            evento.dispatch();
 
         }
         private function loginServiceFaultHandler(event:FaultEvent):void {
