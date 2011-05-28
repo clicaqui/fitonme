@@ -3,9 +3,7 @@ package br.clicaqui.model
 	
 	
 	import com.adobe.cairngorm.model.IModelLocator;
-	
-	import flash.sampler.Sample;
-	
+
 	import mx.collections.ArrayCollection;
    
   	[Bindable]

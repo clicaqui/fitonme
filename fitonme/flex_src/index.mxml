@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
-            xmlns:view="br.clicaqui.view.*"
-	xmlns:popup="com.adobe.cairngorm.popup.*" xmlns:screens="br.clicaqui.screens.*"  layout="absolute" applicationComplete="getGrants()">
+<s:Application 
+		xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"
+        xmlns:view="br.clicaqui.view.*"	 xmlns:screens="br.clicaqui.screens.*"  applicationComplete="getGrants()">
 	
  
- <mx:Script>
+ <fx:Script>
  	<![CDATA[
- 		import flash.net.sendToURL;
+
  		import br.clicaqui.model.ModelLocator;
  		import br.clicaqui.control.events.*;
+ 		import br.clicaqui.screens.Login;
+ 		
+        import mx.managers.PopUpManager;
+ 
+            protected function btn_click(evt:MouseEvent):void {
+                var ttlWndw:Login = PopUpManager.createPopUp(this, Login, true) as Login;
+                PopUpManager.centerPopUp(ttlWndw);
+            } 		
        // ******************************************************
        // Private Constants and Attributes 
        // ******************************************************
@@ -24,23 +32,20 @@
         }
 		[Bindable]  private var _model : ModelLocator = ModelLocator.getInstance(); 	
  	]]>
- </mx:Script>
+ </fx:Script>
 
 	<mx:ApplicationControlBar width="100%" height="8%">
 		<mx:Spacer width="100%"/>
+		<mx:Label text="{_model.usuario}" />
+		<mx:Button label="Login" click="btn_click(event);"/>
 		<mx:Button label="Sair" click="logoutApp();"/>
 	</mx:ApplicationControlBar>
 	 
-  
- <control:FitonmeController						xmlns:control="br.clicaqui.control.*" />
- <rds:Services	id="fitonmeServices"		xmlns:rds="br.clicaqui.control.delegates.*" />  
-    
+ <fx:Declarations>
+	 <control:FitonmeController						xmlns:control="br.clicaqui.control.*" />
+	 <rds:Services	id="fitonmeServices"		xmlns:rds="br.clicaqui.control.delegates.*" />  
+ </fx:Declarations> 
 
-	
-<popup:PopUpWrapper id="loginForm" open="{!_model.autenticado}" center="true" modal="true">    	
-	<screens:Login />
-</popup:PopUpWrapper>
+	<fx:Style source="fitonme.css"/>
 
-	<mx:Style source="fitonme.css"/>
-
-</mx:Application>
+</s:Application>

@@ -36,7 +36,8 @@ package br.clicaqui.control.command
 			//__model.CURRENT_VIEW = "home";
 			__model._userRoles = (data as AuthorizationData).roles;
 			__model.usuario = (data as AuthorizationData).username;
-			__model.autenticado = true;
+			Alert.show(new String(__model.usuario));
+			//__model.autenticado = true;
 
 		}	  
 
