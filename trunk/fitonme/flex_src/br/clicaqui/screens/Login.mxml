@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 title="Login" layout="vertical" horizontalAlign="center" verticalCenter="-112" verticalGap="5"
-          paddingLeft="15" paddingRight="15" paddingTop="5" paddingBottom="5" height="229" horizontalCenter="0">
-
+<s:TitleWindow	xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 title="Login" 
+		 close="ttlWndw_close(event)">
+<fx:Declarations>
    <mx:HTTPService
             id="loginService"
             url="http://localhost:8080/Fitonme/j_spring_security_check"
@@ -15,30 +15,36 @@
             <j_password>{passwordTextInput.text}</j_password>
         </mx:request>
     </mx:HTTPService>
+	
+</fx:Declarations>
 
   
-  <mx:Script>
+  <fx:Script>
     <![CDATA[
     	import mx.containers.Panel;
       import mx.controls.Alert;
+      import mx.core.IFlexDisplayObject;
       import mx.events.CloseEvent;
+      import mx.managers.PopUpManager;
       import mx.rpc.events.*;
       import br.clicaqui.model.ModelLocator;
       
       import br.clicaqui.control.events.LoadGrantsEvent;
       
       
-            private function submitLogin():void {
+        private function submitLogin():void {
             submitButton.enabled = false;
             loginService.send();
-       
-
 			submitButton.enabled = true;            
         }
+        
+		protected function ttlWndw_close(evt:CloseEvent):void {
+               PopUpManager.removePopUp(evt.currentTarget as IFlexDisplayObject);
+       }   
+              
         private function loginServiceResultHandler(event:ResultEvent):void {
-           
-            var evento : LoadGrantsEvent = new LoadGrantsEvent();
-            evento.dispatch();
+
+            PopUpManager.removePopUp(this);
 
         }
         private function loginServiceFaultHandler(event:FaultEvent):void {
@@ -54,7 +60,7 @@
 
       
     ]]>
-  </mx:Script>
+  </fx:Script>
   
    
     
@@ -68,9 +74,11 @@
     <mx:FormItem label="Password">
       <mx:TextInput id="passwordTextInput" displayAsPassword="true"  text="" />
     </mx:FormItem>
+      <mx:Button id="submitButton" label="OK" click="submitLogin()"/>
+
   </mx:Form>
     
-  <mx:Button id="submitButton" label="OK" click="submitLogin()"/>    
   
-</mx:Panel>
+  
+</s:TitleWindow>
 

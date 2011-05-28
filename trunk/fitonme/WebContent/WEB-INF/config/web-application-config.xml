@@ -18,7 +18,7 @@
     <bean id="secureService" class="br.clicaqui.SecureService">
        <flex:remoting-destination/>
        <security:intercept-methods>
-        <security:protect method="get*" access="ROLE_GUEST, ROLE_USER, ROLE_ADMIN" />
+        <security:protect method="get*" access="ROLE_ANONYMOUS, ROLE_GUEST, ROLE_USER, ROLE_ADMIN" />
    	</security:intercept-methods>    	
 	</bean>    
 
