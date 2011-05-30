@@ -17,7 +17,6 @@ package br.clicaqui.control.command
 	  {
 	  		switch(event.type) {
 				case LoadGrantsEvent.EVENT_NAME   	:    	loadGrants(event as LoadGrantsEvent);		break;
-				
 				default 							:		break;
 			}
  	
@@ -36,7 +35,6 @@ package br.clicaqui.control.command
 			//__model.CURRENT_VIEW = "home";
 			__model._userRoles = (data as AuthorizationData).roles;
 			__model.usuario = (data as AuthorizationData).username;
-			Alert.show(new String(__model.usuario));
 			//__model.autenticado = true;
 
 		}	  
