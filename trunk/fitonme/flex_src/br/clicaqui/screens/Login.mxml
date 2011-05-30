@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow	xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" 
+<s:TitleWindow	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
 		 title="Login" 
 		 close="ttlWndw_close(event)">
+    <s:layout>
+        <s:VerticalLayout horizontalAlign="center" verticalAlign="middle" />
+    </s:layout>
+    		 
 <fx:Declarations>
    <mx:HTTPService
             id="loginService"
@@ -15,7 +21,8 @@
             <j_password>{passwordTextInput.text}</j_password>
         </mx:request>
     </mx:HTTPService>
-	
+  		<mx:StringValidator id="loginNameValidator"  source="{emailTextInput}" property="text" 
+				requiredFieldError="Login name é um campo requerido." trigger="{submitButton}" triggerEvent="click" />
 </fx:Declarations>
 
   
@@ -28,9 +35,14 @@
       import mx.managers.PopUpManager;
       import mx.rpc.events.*;
       import br.clicaqui.model.ModelLocator;
+      import mx.validators.Validator;
+      import mx.events.ValidationResultEvent;
       
       import br.clicaqui.control.events.LoadGrantsEvent;
       
+      private var focussedFormControl:DisplayObject;
+      private var formIsValid:Boolean = false;
+      public var formIsEmpty:Boolean;
       
         private function submitLogin():void {
             submitButton.enabled = false;
@@ -43,7 +55,8 @@
        }   
               
         private function loginServiceResultHandler(event:ResultEvent):void {
-
+            var evt : LoadGrantsEvent = new LoadGrantsEvent();
+	        evt.dispatch();
             PopUpManager.removePopUp(this);
 
         }
@@ -51,9 +64,9 @@
             authenticationMessage.text = "Problem while authentication ...";
             authenticationMessage.visible = true;
         }
-       // ******************************************************
-       // Private Constants and Attributes 
-       // ******************************************************
+	 	// ******************************************************
+        // Private Constants and Attributes 
+        // ******************************************************
         
 		[Bindable]  private var _model : ModelLocator = ModelLocator.getInstance(); 	
       
@@ -61,24 +74,22 @@
       
     ]]>
   </fx:Script>
-  
    
-    
-  <mx:Text id="authenticationMessage" visible="false" styleName="warning"/>
-  <mx:Image source="assets/logo.png"/>
   
-  <mx:Form defaultButton="{submitButton}">
-    <mx:FormItem label="Login or Email">      
+  <mx:Text id="authenticationMessage" visible="false" styleName="warning" color="red"/>
+  
+  <mx:Form id="frm" defaultButton="{submitButton}">
+    <mx:FormItem label="Login or Email" required="true">      
       <mx:TextInput id="emailTextInput" text="" />                        
     </mx:FormItem>
     <mx:FormItem label="Password">
       <mx:TextInput id="passwordTextInput" displayAsPassword="true"  text="" />
     </mx:FormItem>
+    <mx:FormItem>
       <mx:Button id="submitButton" label="OK" click="submitLogin()"/>
-
+    </mx:FormItem>
   </mx:Form>
     
-  
   
 </s:TitleWindow>
 
